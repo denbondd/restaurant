@@ -1,0 +1,47 @@
+:root {
+    --background: #F4F5F9;
+}
+
+.ls_body {
+    background: var(--background);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ls_container {
+    background-color: white;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    padding: 16px;
+    align-items: center;
+    margin: auto;
+}
+
+.ls_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ls_et {
+    margin: 3px;
+    width: auto;
+}
+
+.ls_text {
+    width: max-content;
+    margin: auto;
+}
+
+.ls_btn {
+    padding: 7px 15px;
+    margin-top: 10px;
+}
+
+.ls_title {
+    width: max-content;
+    margin: 0 auto 10px auto;
+    font-size: x-large;
+}
