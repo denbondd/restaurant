@@ -10,12 +10,12 @@ import java.sql.SQLException;
 public class ConnectionPool {
     private static ConnectionPool instance;
 
-    private DataSource ds;
+    private final DataSource ds;
 
     private ConnectionPool() {
         try {
             Context context = new InitialContext();
-            ds = (DataSource) context.lookup("jdbc/restaurant");
+            ds = (DataSource) context.lookup("java:comp/env/jdbc/restaurant");
         } catch (NamingException ex) {
             throw new IllegalStateException("Cannot init DBManager", ex);
         }
