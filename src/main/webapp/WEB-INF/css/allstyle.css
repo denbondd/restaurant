@@ -2,21 +2,23 @@
     --background: #F4F5F9;
 }
 
+.navbar {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
 .ls_body {
     background: var(--background);
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .ls_container {
     background-color: white;
     border-radius: 10px;
     width: 100%;
-    max-width: 400px;
+    max-width: 350px;
     padding: 16px;
     align-items: center;
-    margin: auto;
+    margin: 40px auto auto;
 }
 
 .ls_form {
@@ -44,4 +46,13 @@
     width: max-content;
     margin: 0 auto 10px auto;
     font-size: x-large;
+}
+
+.active {
+    background-color: var(--bs-primary);
+    border-radius: 10px;
+}
+
+.active > a {
+    color: white !important;
 }

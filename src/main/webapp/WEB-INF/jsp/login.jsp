@@ -1,13 +1,14 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
-<head>
-    <title>LogIn</title>
-    <style>
-        <%@include file="../css/login_signup.css" %>
-    </style>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
-          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-</head>
+<c:set var="title" value="LogIn" scope="page"/>
+<%@include file="head.jspf" %>
 <body class="ls_body">
+
+<c:set var="currentPage" value="account" scope="page"/>
+<%@include file="header.jspf" %>
+
 <div class="ls_container shadow">
     <p class="ls_title">Log In</p>
     <form class="ls_form" action="${pageContext.request.contextPath}/account/login" method="post">
@@ -17,5 +18,6 @@
     </form>
     <p class="ls_text">Don't have an account? <a href="${pageContext.request.contextPath}/account/signup">Sign Up</a></p>
 </div>
+
 </body>
 </html>
