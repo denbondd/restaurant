@@ -2,13 +2,13 @@
     --background: #F4F5F9;
 }
 
+body {
+    background: var(--background);
+}
+
 .navbar {
     padding-left: 20px;
     padding-right: 20px;
-}
-
-.ls_body {
-    background: var(--background);
 }
 
 .ls_container {

@@ -8,6 +8,7 @@ public class SqlUtils {
     public static final String LOG_IN = "SELECT * FROM user WHERE login LIKE ? AND password LIKE ?";
     public static final String SIGN_UP = "INSERT INTO user (login, password) VALUES (?, ?)";
     public static final String FIND_USER_BY_LOGIN = "SELECT * FROM user WHERE login LIKE ?";
+    public static final String GET_ALL_DISHES = "SELECT * FROM dish";
 
     public static void rollback(Connection con) {
         try {

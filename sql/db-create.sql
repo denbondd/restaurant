@@ -2,8 +2,8 @@ CREATE DATABASE IF NOT EXISTS restaurant;
 
 USE restaurant;
 
-DROP TABLE IF EXISTS receipt_has_product;
-DROP TABLE IF EXISTS product;
+DROP TABLE IF EXISTS receipt_has_dish;
+DROP TABLE IF EXISTS dish;
 DROP TABLE IF EXISTS receipt;
 DROP TABLE IF EXISTS status;
 DROP TABLE IF EXISTS user;
@@ -35,9 +35,9 @@ CREATE TABLE category(
     FOREIGN KEY (parent_id) REFERENCES category(id)
 );
 
-CREATE TABLE product (
+CREATE TABLE dish (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(32) NOT NULL UNIQUE,
+    name VARCHAR(255) NOT NULL UNIQUE,
     category_id INT NOT NULL,
     price INT NOT NULL,
     
@@ -61,14 +61,14 @@ CREATE TABLE receipt (
     FOREIGN KEY (status_id) REFERENCES status(id)
 );
 
-CREATE TABLE receipt_has_product (
+CREATE TABLE receipt_has_dish (
 	receipt_id INT NOT NULL,
-	product_id INT NOT NULL,
+	dish_id INT NOT NULL,
     count INT NOT NULL DEFAULT 1,
     price INT NOT NULL,
     
     FOREIGN KEY (receipt_id) REFERENCES receipt(id),
-    FOREIGN KEY (product_id) REFERENCES product(id)
+    FOREIGN KEY (dish_id) REFERENCES dish(id)
 );
 
 -- =========INSERTING============= 
