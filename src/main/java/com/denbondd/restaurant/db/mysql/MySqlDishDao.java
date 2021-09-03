@@ -21,6 +21,8 @@ public class MySqlDishDao implements DishDao {
                 .setName(rs.getString("name"))
                 .setCategoryId(rs.getLong("category_id"))
                 .setPrice(rs.getLong("price"))
+                .setWeight(rs.getLong("weight"))
+                .setDescription(rs.getString("description"))
                 .getDish();
     }
 

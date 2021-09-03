@@ -6,6 +6,8 @@ public class Dish {
     private String name;
     private long categoryId;
     private long price;
+    private long weight;
+    private String description;
 
     public long getId() {
         return id;
@@ -21,6 +23,14 @@ public class Dish {
 
     public long getPrice() {
         return price;
+    }
+
+    public long getWeight() {
+        return weight;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public static class Builder {
@@ -47,6 +57,16 @@ public class Dish {
 
         public Builder setPrice(long price) {
             dish.price = price;
+            return this;
+        }
+
+        public Builder setWeight(long weight) {
+            dish.weight = weight;
+            return this;
+        }
+
+        public Builder setDescription(String description) {
+            dish.description = description;
             return this;
         }
     }
