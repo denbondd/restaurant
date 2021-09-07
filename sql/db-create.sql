@@ -28,11 +28,7 @@ CREATE TABLE user (
 
 CREATE TABLE category(
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(32) NOT NULL UNIQUE,
-    parent_id INT,
-    description VARCHAR(255),
-    
-    FOREIGN KEY (parent_id) REFERENCES category(id)
+    name VARCHAR(32) NOT NULL UNIQUE
 );
 
 CREATE TABLE dish (
@@ -84,6 +80,7 @@ INSERT INTO status (name) VALUE ('delivering');
 INSERT INTO status (name) VALUE ('received');
 
 INSERT INTO category (name) VALUE ('Burgers');
+INSERT INTO category (name) VALUE ('Soups');
 
 INSERT INTO dish (name, category_id, price, weight, description) 
 	VALUE ('Fish burger', 1, 229, 350, 'Delicate bun, Caesar sauce, grilled salmon fillet, fresh iceberg and lots of vegetables!');
@@ -93,3 +90,7 @@ INSERT INTO dish (name, category_id, price, weight, description)
 	VALUE ('Black burger', 1, 189, 400, 'Brutal black bun, BBQ sauce, some more mustard brutality, grilled chopped steak, some onions and vegetables, Voila.');
 INSERT INTO dish (name, category_id, price, weight, description) 
 	VALUE ('Burger with Veal', 1, 228, 400, 'Delicate white bun, BBQ sauce, some Dijon mustard, grilled veal tenderloin, lots of vegetables: tomatoes, mars onions, iceberg lettuce, and where was the cheese? We\'ve added Cheddar! Are you in love already? The default roast is medium. You can change the roast when confirming the order, notifying the operator.');
+INSERT INTO dish (name, category_id, price, weight, description)
+	VALUE ('Borsch', 2, 109, 400, 'Real Ukrainian Borsch with juicy rib and sour cream.');
+INSERT INTO dish (name, category_id, price, weight, description)
+	VALUE ('Okroshka', 2, 89, 400, 'Traditional okroshka cooked with love of cooks.');

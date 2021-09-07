@@ -42,4 +42,62 @@ public class MySqlDishDao implements DishDao {
             throw new DbException("Cannot getAllDishes", e);
         }
     }
+
+    @Override
+    public List<Dish> getDishesFromCategory(int categoryId) throws DbException {
+        List<Dish> dishes = new ArrayList<>();
+        try (Connection c = ConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = c.prepareStatement(SqlUtils.GET_DISHES_FROM_CATEGORY)) {
+            ps.setLong(1, categoryId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    dishes.add(mapDish(rs));
+                }
+            }
+            return dishes;
+        } catch (SQLException e) {
+            //TODO log with log4j
+            e.printStackTrace();
+            throw new DbException("Cannot getDishesFromCategory" + categoryId, e);
+        }
+    }
+
+    @Override
+    public List<Dish> getSortedDishesFromCategory(int categoryId, String sortBy) throws DbException {
+        List<Dish> dishes = new ArrayList<>();
+        try (Connection c = ConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = c.prepareStatement(SqlUtils.GET_SORTED_DISHES_FROM_CATEGORY + sortBy)) {
+            ps.setLong(1, categoryId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    dishes.add(mapDish(rs));
+                }
+            }
+            System.out.println(dishes);
+            return dishes;
+        } catch (SQLException e) {
+            //TODO log with log4j
+            e.printStackTrace();
+            throw new DbException("Cannot getSortedDishesFromCategory" + categoryId, e);
+        }
+    }
+
+    @Override
+    public List<Dish> getSortedDishes(String sortBy) throws DbException {
+        List<Dish> dishes = new ArrayList<>();
+        try (Connection c = ConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = c.prepareStatement(SqlUtils.GET_SORTED_DISHES + sortBy)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    dishes.add(mapDish(rs));
+                }
+            }
+            System.out.println(dishes);
+            return dishes;
+        } catch (SQLException e) {
+            //TODO log with log4j
+            e.printStackTrace();
+            throw new DbException("Cannot getSortedDishes", e);
+        }
+    }
 }

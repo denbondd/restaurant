@@ -63,6 +63,16 @@ body {
     flex-wrap: wrap;
 }
 
+.c_category_name {
+    font-size: xx-large;
+    margin: 10px 10px 10px 30px;
+}
+
+.c_header {
+    display: flex;
+    justify-content: space-between;
+}
+
 .dish_container {
     border-radius: var(--dish-container-corner-radius);
     background-color: white;

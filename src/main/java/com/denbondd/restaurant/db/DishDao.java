@@ -8,4 +8,7 @@ import java.util.List;
 public interface DishDao {
 
     List<Dish> getAllDishes() throws DbException;
+    List<Dish> getDishesFromCategory(int categoryId) throws DbException;
+    List<Dish> getSortedDishesFromCategory(int categoryId, String sortBy) throws DbException;
+    List<Dish> getSortedDishes(String sortBy) throws DbException;
 }
