@@ -4,7 +4,7 @@
 <html>
 <c:set var="title" value="LogIn" scope="page"/>
 <%@include file="head.jspf" %>
-<body class="ls_body">
+<body>
 
 <c:set var="currentPage" value="account" scope="page"/>
 <%@include file="header.jspf" %>

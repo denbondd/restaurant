@@ -1,14 +1,15 @@
 :root {
     --background: #F4F5F9;
+    --dish-container-corner-radius: 20px;
+}
+
+body {
+    background: var(--background);
 }
 
 .navbar {
     padding-left: 20px;
     padding-right: 20px;
-}
-
-.ls_body {
-    background: var(--background);
 }
 
 .ls_container {
@@ -55,4 +56,72 @@
 
 .active > a {
     color: white !important;
+}
+
+.c_dishes {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.c_category_name {
+    font-size: xx-large;
+    margin: 10px 10px 10px 30px;
+}
+
+.c_header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.c_selectsort_form {
+    margin-left: 30px;
+    margin-bottom: unset;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.c_selectsort_form > .btn {
+    margin: 5px;
+}
+
+.form-select {
+    width: unset;
+    display: unset;
+    margin: 5px;
+}
+
+.dish_container {
+    border-radius: var(--dish-container-corner-radius);
+    background-color: white;
+    width: min-content;
+    margin: 10px;
+}
+
+.dish_img {
+    width: 200px;
+    height: 300px;
+    border-top-left-radius: var(--dish-container-corner-radius);
+    border-top-right-radius: var(--dish-container-corner-radius);
+}
+
+.dish_text_info {
+    padding: 10px;
+}
+
+.dish_text_info > p {
+    margin-bottom: 5px !important;
+}
+
+.dish_name {
+    font-size: x-large;
+    font-weight: 600;
+}
+
+.dish_price {
+    font-size: x-large;
+    margin: 10px;
+    font-weight: 500;
 }

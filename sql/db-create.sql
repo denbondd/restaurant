@@ -2,8 +2,8 @@ CREATE DATABASE IF NOT EXISTS restaurant;
 
 USE restaurant;
 
-DROP TABLE IF EXISTS receipt_has_product;
-DROP TABLE IF EXISTS product;
+DROP TABLE IF EXISTS receipt_has_dish;
+DROP TABLE IF EXISTS dish;
 DROP TABLE IF EXISTS receipt;
 DROP TABLE IF EXISTS status;
 DROP TABLE IF EXISTS user;
@@ -28,18 +28,16 @@ CREATE TABLE user (
 
 CREATE TABLE category(
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(32) NOT NULL UNIQUE,
-    parent_id INT,
-    description VARCHAR(255),
-    
-    FOREIGN KEY (parent_id) REFERENCES category(id)
+    name VARCHAR(32) NOT NULL UNIQUE
 );
 
-CREATE TABLE product (
+CREATE TABLE dish (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(32) NOT NULL UNIQUE,
+    name VARCHAR(255) NOT NULL UNIQUE,
     category_id INT NOT NULL,
     price INT NOT NULL,
+    weight INT NOT NULL,
+    description VARCHAR(1023),
     
     FOREIGN KEY (category_id) REFERENCES category(id)
 );
@@ -61,14 +59,14 @@ CREATE TABLE receipt (
     FOREIGN KEY (status_id) REFERENCES status(id)
 );
 
-CREATE TABLE receipt_has_product (
+CREATE TABLE receipt_has_dish (
 	receipt_id INT NOT NULL,
-	product_id INT NOT NULL,
+	dish_id INT NOT NULL,
     count INT NOT NULL DEFAULT 1,
     price INT NOT NULL,
     
     FOREIGN KEY (receipt_id) REFERENCES receipt(id),
-    FOREIGN KEY (product_id) REFERENCES product(id)
+    FOREIGN KEY (dish_id) REFERENCES dish(id)
 );
 
 -- =========INSERTING============= 
@@ -80,3 +78,19 @@ INSERT INTO status (name) VALUE ('approved');
 INSERT INTO status (name) VALUE ('cooking');
 INSERT INTO status (name) VALUE ('delivering');
 INSERT INTO status (name) VALUE ('received');
+
+INSERT INTO category (name) VALUE ('Burgers');
+INSERT INTO category (name) VALUE ('Soups');
+
+INSERT INTO dish (name, category_id, price, weight, description) 
+	VALUE ('Fish burger', 1, 229, 350, 'Delicate bun, Caesar sauce, grilled salmon fillet, fresh iceberg and lots of vegetables!');
+INSERT INTO dish (name, category_id, price, weight, description) 
+	VALUE ('Cheese burger', 1, 209, 500, '- Where\'s the roll? - And there is no roll, but there is mozzarella in crispy panko breadcrumbs, fresh vegetables and the juiciest cutlet.');
+INSERT INTO dish (name, category_id, price, weight, description) 
+	VALUE ('Black burger', 1, 189, 400, 'Brutal black bun, BBQ sauce, some more mustard brutality, grilled chopped steak, some onions and vegetables, Voila.');
+INSERT INTO dish (name, category_id, price, weight, description) 
+	VALUE ('Burger with Veal', 1, 228, 400, 'Delicate white bun, BBQ sauce, some Dijon mustard, grilled veal tenderloin, lots of vegetables: tomatoes, mars onions, iceberg lettuce, and where was the cheese? We\'ve added Cheddar! Are you in love already? The default roast is medium. You can change the roast when confirming the order, notifying the operator.');
+INSERT INTO dish (name, category_id, price, weight, description)
+	VALUE ('Borsch', 2, 109, 400, 'Real Ukrainian Borsch with juicy rib and sour cream.');
+INSERT INTO dish (name, category_id, price, weight, description)
+	VALUE ('Okroshka', 2, 89, 400, 'Traditional okroshka cooked with love of cooks.');
