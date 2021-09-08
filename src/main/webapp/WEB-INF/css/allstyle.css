@@ -71,6 +71,26 @@ body {
 .c_header {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.c_selectsort_form {
+    margin-left: 30px;
+    margin-bottom: unset;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.c_selectsort_form > .btn {
+    margin: 5px;
+}
+
+.form-select {
+    width: unset;
+    display: unset;
+    margin: 5px;
 }
 
 .dish_container {

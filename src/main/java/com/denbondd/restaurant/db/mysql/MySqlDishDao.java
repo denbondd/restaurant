@@ -73,7 +73,6 @@ public class MySqlDishDao implements DishDao {
                     dishes.add(mapDish(rs));
                 }
             }
-            System.out.println(dishes);
             return dishes;
         } catch (SQLException e) {
             //TODO log with log4j

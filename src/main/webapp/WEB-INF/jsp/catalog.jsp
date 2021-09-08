@@ -12,9 +12,10 @@
 <jsp:useBean id="categories" scope="request" type="java.util.List"/>
 <nav class="c_header">
     <p class="c_category_name">${empty param.category || param.category == 0 ? "All dishes" : categories.get(param.category-1).name}</p>
-    <form action="${pageContext.request.contextPath}/catalog" method="get">
+    <form class="c_selectsort_form" action="${pageContext.request.contextPath}/catalog" method="get">
+        <div>
         Category:
-        <select name="category">
+        <select name="category" class="form-select">
             <option value="">All dishes</option>
             <c:forEach var="category" items="${categories}">
                 <option ${param.category == category.id ? "selected" : ""} value="${category.id}">
@@ -22,14 +23,17 @@
                 </option>
             </c:forEach>
         </select>
+        </div>
+        <div>
         SortBy:
-        <select name="sortBy">
+        <select name="sortBy" class="form-select">
             <option value="default">Default</option>
             <c:forEach var="sort" items="${sortTypes}">
                 <option ${param.sortBy == sort.value ? "selected" : ""} value="${sort.value}">${sort.key}</option>
             </c:forEach>
         </select>
-        <input type="submit" value="show"/>
+        </div>
+        <input class="btn btn-outline-secondary" type="submit" value="show"/>
     </form>
 </nav>
 
