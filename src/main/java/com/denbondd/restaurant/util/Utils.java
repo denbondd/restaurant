@@ -1,5 +1,8 @@
 package com.denbondd.restaurant.util;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -13,9 +16,8 @@ public class Utils {
      * @return hashed string
      */
     public static String hash(char[] arr) {
-        MessageDigest md = null;
         try {
-            md = MessageDigest.getInstance("SHA-512");
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
             md.update(new String(arr).getBytes(StandardCharsets.UTF_8));
             byte[] hash = md.digest();
             StringBuilder answ = new StringBuilder();
@@ -24,8 +26,7 @@ public class Utils {
             }
             return answ.toString();
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            return null;
+            throw new IllegalArgumentException(e);
         }
     }
 }

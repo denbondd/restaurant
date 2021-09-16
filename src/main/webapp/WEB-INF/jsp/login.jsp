@@ -16,7 +16,11 @@
         <input type="password" name="password" class="ls_et form-control" placeholder="Password">
         <input type="submit" class="ls_btn btn btn-primary" value="LogIn">
     </form>
-    <p class="ls_text">Don't have an account? <a href="${pageContext.request.contextPath}/account/signup">Sign Up</a></p>
+    <c:if test="${param.err ne null}">
+        <p class="ls_err">You entered wrong login or password</p>
+    </c:if>
+    <p class="ls_text">Don't have an account? <a href="${pageContext.request.contextPath}/account/signup">Sign Up</a>
+    </p>
 </div>
 
 </body>

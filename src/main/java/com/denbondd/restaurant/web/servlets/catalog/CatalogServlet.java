@@ -5,6 +5,9 @@ import com.denbondd.restaurant.db.entity.Category;
 import com.denbondd.restaurant.db.entity.Dish;
 import com.denbondd.restaurant.exceptions.DbException;
 import com.denbondd.restaurant.util.SqlUtils;
+import com.denbondd.restaurant.web.servlets.account.LogInServlet;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +20,8 @@ import java.util.List;
 
 @WebServlet("/catalog")
 public class CatalogServlet extends HttpServlet {
+
+    private static final Logger log = LogManager.getLogger(CatalogServlet.class.getName());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -44,7 +49,7 @@ public class CatalogServlet extends HttpServlet {
             req.getRequestDispatcher("/WEB-INF/jsp/catalog.jsp").forward(req, resp);
         } catch (DbException e) {
             //TODO
-            e.printStackTrace();
+            log.error(e);
         }
     }
 }

@@ -16,6 +16,9 @@
         <input type="password" name="password" class="ls_et form-control" placeholder="Password">
         <input type="submit" class="ls_btn btn btn-primary" value="SignUp">
     </form>
+    <c:if test="${param.err ne null}">
+        <p class="ls_err">This login already exists</p>
+    </c:if>
     <p class="ls_text">Already have an account? <a href="${pageContext.request.contextPath}/account/login">Log In</a>
     </p>
 </div>

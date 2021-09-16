@@ -49,6 +49,12 @@ body {
     font-size: x-large;
 }
 
+.ls_err {
+    color: red;
+    width: max-content;
+    margin: auto auto 5px;
+}
+
 .active {
     background-color: var(--bs-primary);
     border-radius: 10px;
@@ -124,4 +130,16 @@ body {
     font-size: x-large;
     margin: 10px;
     font-weight: 500;
+}
+
+.err_container {
+    font-size: xxx-large;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: max-content;
+    height: 100px;
 }

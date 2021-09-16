@@ -6,6 +6,8 @@ import com.denbondd.restaurant.db.entity.User;
 import com.denbondd.restaurant.exceptions.DbException;
 import com.denbondd.restaurant.util.SqlUtils;
 import com.denbondd.restaurant.util.Utils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +15,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class MySqlUserDao implements UserDao {
+
+    private static final Logger log = LogManager.getLogger(MySqlUserDao.class.getName());
 
     private static User mapUser(ResultSet rs) throws SQLException {
         int k = 0;
@@ -39,8 +43,7 @@ public class MySqlUserDao implements UserDao {
                 return mapUser(rs);
             }
         } catch (SQLException ex) {
-            //TODO log with log4j
-            ex.printStackTrace();
+            log.error(ex);
             throw new DbException("Cannot getUserByLogin", ex);
         }
     }
@@ -58,8 +61,7 @@ public class MySqlUserDao implements UserDao {
                 return mapUser(rs);
             }
         } catch (SQLException ex) {
-            //TODO log with log4j
-            ex.printStackTrace();
+            log.error(ex);
             throw new DbException("Cannot logIn", ex);
         }
     }
@@ -81,8 +83,7 @@ public class MySqlUserDao implements UserDao {
             con.commit();
             return getUserByLogin(login);
         } catch (SQLException ex) {
-            //TODO log with log4j
-            ex.printStackTrace();
+            log.error(ex);
             if (con != null) SqlUtils.rollback(con);
             throw new DbException("Cannot logIn", ex);
         } finally {

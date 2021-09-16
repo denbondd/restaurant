@@ -5,6 +5,8 @@ import com.denbondd.restaurant.db.DishDao;
 import com.denbondd.restaurant.db.entity.Dish;
 import com.denbondd.restaurant.exceptions.DbException;
 import com.denbondd.restaurant.util.SqlUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MySqlDishDao implements DishDao {
+
+    private static final Logger log = LogManager.getLogger(MySqlDishDao.class.getName());
 
     private static Dish mapDish(ResultSet rs) throws SQLException {
         return new Dish.Builder()
@@ -37,8 +41,7 @@ public class MySqlDishDao implements DishDao {
             }
             return dishes;
         } catch (SQLException e) {
-            //TODO log with log4j
-            e.printStackTrace();
+            log.error(e);
             throw new DbException("Cannot getAllDishes", e);
         }
     }
@@ -56,8 +59,7 @@ public class MySqlDishDao implements DishDao {
             }
             return dishes;
         } catch (SQLException e) {
-            //TODO log with log4j
-            e.printStackTrace();
+            log.error(e);
             throw new DbException("Cannot getDishesFromCategory" + categoryId, e);
         }
     }
@@ -75,8 +77,7 @@ public class MySqlDishDao implements DishDao {
             }
             return dishes;
         } catch (SQLException e) {
-            //TODO log with log4j
-            e.printStackTrace();
+            log.error(e);
             throw new DbException("Cannot getSortedDishesFromCategory" + categoryId, e);
         }
     }
@@ -91,11 +92,9 @@ public class MySqlDishDao implements DishDao {
                     dishes.add(mapDish(rs));
                 }
             }
-            System.out.println(dishes);
             return dishes;
         } catch (SQLException e) {
-            //TODO log with log4j
-            e.printStackTrace();
+            log.error(e);
             throw new DbException("Cannot getSortedDishes", e);
         }
     }

@@ -5,6 +5,8 @@ import com.denbondd.restaurant.db.ConnectionPool;
 import com.denbondd.restaurant.db.entity.Category;
 import com.denbondd.restaurant.exceptions.DbException;
 import com.denbondd.restaurant.util.SqlUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MySqlCategoryDao implements CategoryDao {
+
+    private static final Logger log = LogManager.getLogger(MySqlCategoryDao.class.getName());
 
     private static Category mapCategory(ResultSet rs) throws SQLException {
         return new Category.Builder()
@@ -33,7 +37,7 @@ public class MySqlCategoryDao implements CategoryDao {
             }
             return categories;
         } catch (SQLException e) {
-            //TODO log with log4j
+            log.error(e);
             throw new DbException("Cannot getAllCategories", e);
         }
     }

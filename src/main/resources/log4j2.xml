@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout
+                    disableAnsi="false"
+                    pattern="%highlight{%d{[yyyy-MM-dd HH:mm:ss.SSS]} %-5level %logger{36} - %msg%n}"/>
+        </Console>
+
+    </Appenders>
+    <Loggers>
+        <Root level="all">
+            <AppenderRef ref="Console" level="trace"/>
+        </Root>
+
+    </Loggers>
+</Configuration>
