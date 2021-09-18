@@ -109,6 +109,7 @@ body {
 .dish_img {
     width: 200px;
     height: 300px;
+    object-fit: cover;
     border-top-left-radius: var(--dish-container-corner-radius);
     border-top-right-radius: var(--dish-container-corner-radius);
 }
