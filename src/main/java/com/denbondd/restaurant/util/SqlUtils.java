@@ -19,6 +19,8 @@ public class SqlUtils {
     public static final String GET_DISHES_FROM_CATEGORY = "SELECT * FROM dish WHERE category_id = ?";
     public static final String GET_SORTED_DISHES_FROM_CATEGORY = "SELECT * FROM dish WHERE category_id = ? ORDER BY ";
     public static final String GET_SORTED_DISHES = "SELECT * FROM dish ORDER BY ";
+    public static final String GET_DISHES_COUNT = "SELECT COUNT(*) FROM dish";
+    public static final String GET_DISHES_COUNT_IN_CATEGORY = "SELECT COUNT(*) FROM dish WHERE category_id = ?";
     public static final String GET_ALL_CATEGORIES = "SELECT * FROM category";
 
     public static final Map<String, String> sortingTypes = new HashMap<>();

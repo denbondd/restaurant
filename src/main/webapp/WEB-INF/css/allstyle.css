@@ -93,10 +93,20 @@ body {
     margin: 5px;
 }
 
+.c_pagination {
+    width: max-content;
+    margin: 10px auto 15px auto;
+}
+
 .form-select {
     width: unset;
     display: unset;
     margin: 5px;
+}
+
+.form-control {
+    width: 60px;
+    display: unset;
 }
 
 .dish_container {

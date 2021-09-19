@@ -65,10 +65,11 @@ public class MySqlDishDao implements DishDao {
     }
 
     @Override
-    public List<Dish> getSortedDishesFromCategory(int categoryId, String sortBy) throws DbException {
+    public List<Dish> getSortedDishesFromCategoryOnPage(int categoryId, String sortBy, int dishesInPage, int pageNum) throws DbException {
         List<Dish> dishes = new ArrayList<>();
         try (Connection c = ConnectionPool.getInstance().getConnection();
-             PreparedStatement ps = c.prepareStatement(SqlUtils.GET_SORTED_DISHES_FROM_CATEGORY + sortBy)) {
+             PreparedStatement ps = c.prepareStatement(
+                     SqlUtils.GET_SORTED_DISHES_FROM_CATEGORY + sortBy + " LIMIT " + pageNum * dishesInPage + ", " + dishesInPage)) {
             ps.setLong(1, categoryId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -83,10 +84,11 @@ public class MySqlDishDao implements DishDao {
     }
 
     @Override
-    public List<Dish> getSortedDishes(String sortBy) throws DbException {
+    public List<Dish> getSortedDishesOnPage(String sortBy, int dishesInPage, int pageNum) throws DbException {
         List<Dish> dishes = new ArrayList<>();
         try (Connection c = ConnectionPool.getInstance().getConnection();
-             PreparedStatement ps = c.prepareStatement(SqlUtils.GET_SORTED_DISHES + sortBy)) {
+             PreparedStatement ps = c.prepareStatement(
+                     SqlUtils.GET_SORTED_DISHES + sortBy + " LIMIT " + pageNum * dishesInPage + ", " + dishesInPage)) {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     dishes.add(mapDish(rs));
@@ -96,6 +98,38 @@ public class MySqlDishDao implements DishDao {
         } catch (SQLException e) {
             log.error(e);
             throw new DbException("Cannot getSortedDishes", e);
+        }
+    }
+
+    @Override
+    public int getDishesNumber() throws DbException {
+        try (Connection c = ConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = c.prepareStatement(SqlUtils.GET_DISHES_COUNT);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+            return -1;
+        } catch (SQLException e) {
+            log.error(e);
+            throw new DbException("Cannot getDishesNumber", e);
+        }
+    }
+
+    @Override
+    public int getDishesNumberInCategory(int categoryId) throws DbException {
+        try (Connection c = ConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = c.prepareStatement(SqlUtils.GET_DISHES_COUNT_IN_CATEGORY)) {
+            ps.setInt(1, categoryId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+                return -1;
+            }
+        } catch (SQLException e) {
+            log.error(e);
+            throw new DbException("Cannot getDishesNumberInCategory", e);
         }
     }
 }
