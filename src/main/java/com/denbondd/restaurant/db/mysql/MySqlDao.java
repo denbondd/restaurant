@@ -1,9 +1,6 @@
 package com.denbondd.restaurant.db.mysql;
 
-import com.denbondd.restaurant.db.CategoryDao;
-import com.denbondd.restaurant.db.Dao;
-import com.denbondd.restaurant.db.DishDao;
-import com.denbondd.restaurant.db.UserDao;
+import com.denbondd.restaurant.db.*;
 
 public class MySqlDao extends Dao {
 
@@ -20,5 +17,15 @@ public class MySqlDao extends Dao {
     @Override
     public CategoryDao getCategoryDao() {
         return new MySqlCategoryDao();
+    }
+
+    @Override
+    public CartDao getCartDao() {
+        return new MySqlCartDao();
+    }
+
+    @Override
+    public ReceiptDao getReceiptDao() {
+        return new MySqlReceiptDao();
     }
 }

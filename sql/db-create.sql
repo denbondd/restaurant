@@ -3,13 +3,13 @@ CREATE DATABASE IF NOT EXISTS restaurant;
 USE restaurant;
 
 DROP TABLE IF EXISTS receipt_has_dish;
+DROP TABLE IF EXISTS cart_has_dish;
 DROP TABLE IF EXISTS dish;
 DROP TABLE IF EXISTS receipt;
 DROP TABLE IF EXISTS status;
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS role;
 DROP TABLE IF EXISTS category;
-DROP TABLE IF EXISTS cart_has_dish;
 
 
 CREATE TABLE role (
@@ -52,8 +52,8 @@ CREATE TABLE receipt (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     status_id INT NOT NULL DEFAULT 1,
-    total INT,
-    manager_id INT NOT NULL,
+    total INT NOT NULL,
+    manager_id INT,
     
     FOREIGN KEY (user_id) REFERENCES user(id),
     FOREIGN KEY (manager_id) REFERENCES user(id),

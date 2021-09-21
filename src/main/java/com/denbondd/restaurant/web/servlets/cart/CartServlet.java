@@ -30,7 +30,7 @@ public class CartServlet extends HttpServlet {
         } else {
             User user = (User) session.getAttribute("user");
             try {
-                cart = Dao.getDao().getUserDao().getCart(user.getId());
+                cart = Dao.getDao().getCartDao().getCart(user.getId());
                 session.setAttribute("cart", cart);
             } catch (DbException e) {
                 //todo
@@ -58,7 +58,7 @@ public class CartServlet extends HttpServlet {
             session.setAttribute("cart", cart);
             } else {
                 User user = (User) session.getAttribute("user");
-                Dao.getDao().getUserDao().addDishToCart(user.getId(), dishId, count);
+                Dao.getDao().getCartDao().addDishToCart(user.getId(), dishId, count);
             }
             res.sendRedirect(req.getContextPath() + "/cart");
         } catch (DbException e) {

@@ -13,7 +13,4 @@ public interface UserDao {
     boolean isLoginUnique(String login) throws DbException;
     User getUserByLogin(String login) throws DbException;
 
-    void addDishToCart(long userId, long dishId, int count) throws DbException;
-
-    Map<Dish, Integer> getCart(long userId) throws DbException;
 }

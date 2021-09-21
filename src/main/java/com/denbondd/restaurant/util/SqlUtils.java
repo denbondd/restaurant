@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Savepoint;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +29,11 @@ public class SqlUtils {
     public static final String ADD_DISH_TO_CART = "INSERT INTO cart_has_dish (user_id, dish_id, count) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE count = ?";
     public static final String GET_CART = "SELECT dish_id AS id, name, category_id, price, weight, description, count FROM cart_has_dish AS chd INNER JOIN dish ON dish.id = chd.dish_id WHERE chd.user_id = ?";
 
+    public static final String ADD_RECEIPT = "INSERT INTO receipt (user_id, total) VALUES (?, ?)";
+    public static final String ADD_RECEIPT_HAS_DISH = "INSERT INTO receipt_has_dish (receipt_id, dish_id, count, price) VALUES (?, ?, ?, ?)";
+
+    public static final String GET_USER_RECEIPTS = "SELECT * FROM receipt WHERE user_id = ?";
+
     public static final Map<String, String> sortingTypes = new HashMap<>();
 
     static {
@@ -39,6 +45,14 @@ public class SqlUtils {
     public static void rollback(Connection con) {
         try {
             con.rollback();
+        } catch (SQLException e) {
+            log.error(e);
+        }
+    }
+
+    public static void rollback(Connection con, Savepoint s) {
+        try {
+            con.rollback(s);
         } catch (SQLException e) {
             log.error(e);
         }
