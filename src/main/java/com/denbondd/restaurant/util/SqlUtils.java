@@ -15,6 +15,8 @@ public class SqlUtils {
     public static final String LOG_IN = "SELECT * FROM user WHERE login LIKE ? AND password LIKE ?";
     public static final String SIGN_UP = "INSERT INTO user (login, password) VALUES (?, ?)";
     public static final String FIND_USER_BY_LOGIN = "SELECT * FROM user WHERE login LIKE ?";
+
+    public static final String GET_DISH_BY_ID = "SELECT * FROM dish WHERE id = ?";
     public static final String GET_ALL_DISHES = "SELECT * FROM dish";
     public static final String GET_DISHES_FROM_CATEGORY = "SELECT * FROM dish WHERE category_id = ?";
     public static final String GET_SORTED_DISHES_FROM_CATEGORY = "SELECT * FROM dish WHERE category_id = ? ORDER BY ";
@@ -22,6 +24,9 @@ public class SqlUtils {
     public static final String GET_DISHES_COUNT = "SELECT COUNT(*) FROM dish";
     public static final String GET_DISHES_COUNT_IN_CATEGORY = "SELECT COUNT(*) FROM dish WHERE category_id = ?";
     public static final String GET_ALL_CATEGORIES = "SELECT * FROM category";
+
+    public static final String ADD_DISH_TO_CART = "INSERT INTO cart_has_dish (user_id, dish_id, count) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE count = ?";
+    public static final String GET_CART = "SELECT dish_id AS id, name, category_id, price, weight, description, count FROM cart_has_dish AS chd INNER JOIN dish ON dish.id = chd.dish_id WHERE chd.user_id = ?";
 
     public static final Map<String, String> sortingTypes = new HashMap<>();
 

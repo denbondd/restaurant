@@ -104,11 +104,6 @@ body {
     margin: 5px;
 }
 
-.form-control {
-    width: 60px;
-    display: unset;
-}
-
 .dish_container {
     border-radius: var(--dish-container-corner-radius);
     background-color: white;
@@ -153,4 +148,19 @@ body {
     left: 0;
     width: max-content;
     height: 100px;
+}
+
+.dc_container {
+    display: flex;
+    align-items: center;
+    border-radius: var(--dish-container-corner-radius);
+    background-color: white;
+    margin: 20px;
+}
+
+.dc_img {
+    border-radius: var(--dish-container-corner-radius) 0 0 var(--dish-container-corner-radius);
+    height: 200px;
+    width: 150px;
+    object-fit: cover;
 }

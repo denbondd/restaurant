@@ -1,0 +1,21 @@
+<jsp:useBean id="item" type="java.util.Map.Entry" />
+<c:set var="dish" value="${item.key}" scope="page"/>
+<div class="dc_container">
+    <img src="${pageContext.request.contextPath}/img/dish-${dish.id}.jpg"
+         class="dc_img"
+         alt="dish-${dish.id}.img"
+    />
+    <div class="dish_text_info dc_data">
+        <p class="">${dish.name}</p>
+        <p class="">&ensp;${fn:substring(dish.description, 0, 60)}...</p>
+        <p class="">Weight: ${dish.weight} g</p>
+        <p class="">${dish.price}&#8372;</p>
+    </div>
+    <div class="dc_count">
+        <form method="post" action="${pageContext.request.contextPath}/cart">
+            <input name="count" type="number" min="1" value="${item.value}" />
+            <input name="id" style="display: none" value="${dish.id}">
+            <input type="submit" value="Save">
+        </form>
+    </div>
+</div>

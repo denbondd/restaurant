@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS status;
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS role;
 DROP TABLE IF EXISTS category;
+DROP TABLE IF EXISTS cart_has_dish;
 
 
 CREATE TABLE role (
@@ -66,6 +67,15 @@ CREATE TABLE receipt_has_dish (
     price INT NOT NULL,
     
     FOREIGN KEY (receipt_id) REFERENCES receipt(id),
+    FOREIGN KEY (dish_id) REFERENCES dish(id)
+);
+
+CREATE TABLE cart_has_dish (
+	user_id INT NOT NULL,
+    dish_id INT NOT NULL UNIQUE,
+    count INT NOT NULL DEFAULT 1,
+    
+    FOREIGN KEY (user_id) REFERENCES user(id),
     FOREIGN KEY (dish_id) REFERENCES dish(id)
 );
 
