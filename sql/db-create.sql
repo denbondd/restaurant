@@ -83,6 +83,9 @@ CREATE TABLE cart_has_dish (
 INSERT INTO role (name) VALUE ('client');
 INSERT INTO role (name) VALUE ('manager');
 
+-- login: admin pass: admin role: admin
+INSERT INTO user (login, password, role_id) VALUE ('admin', 'C7AD44CBAD762A5DA0A452F9E854FDC1E0E7A52A38015F23F3EAB1D80B931DD472634DFAC71CD34EBC35D16AB7FB8A90C81F975113D6C7538DC69DD8DE9077EC', 2);
+
 INSERT INTO status (name) VALUE ('new');
 INSERT INTO status (name) VALUE ('approved');
 INSERT INTO status (name) VALUE ('cooking');

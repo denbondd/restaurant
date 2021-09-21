@@ -31,6 +31,7 @@ public class SqlUtils {
 
     public static final String ADD_RECEIPT = "INSERT INTO receipt (user_id, total) VALUES (?, ?)";
     public static final String ADD_RECEIPT_HAS_DISH = "INSERT INTO receipt_has_dish (receipt_id, dish_id, count, price) VALUES (?, ?, ?, ?)";
+    public static final String REMOVE_DISH_FROM_CART = "DELETE FROM cart_has_dish WHERE user_id = ? AND dish_id = ?";
 
     public static final String GET_USER_RECEIPTS = "SELECT * FROM receipt WHERE user_id = ?";
 

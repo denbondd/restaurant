@@ -31,6 +31,14 @@ public class CartServlet extends HttpServlet {
             User user = (User) session.getAttribute("user");
             try {
                 cart = Dao.getDao().getCartDao().getCart(user.getId());
+                //save dishes from session cart to db when user logs in with already some dishes in cart
+                Map<Dish, Integer> sCart = (Map<Dish, Integer>) session.getAttribute("cart");
+                if (sCart != null && sCart != cart) {
+                    for (Map.Entry<Dish, Integer> entry : sCart.entrySet()) {
+                        Dao.getDao().getCartDao().addDishToCart(user.getId(), entry.getKey().getId(), entry.getValue());
+                        cart.put(entry.getKey(), entry.getValue());
+                    }
+                }
                 session.setAttribute("cart", cart);
             } catch (DbException e) {
                 //todo
@@ -54,11 +62,20 @@ public class CartServlet extends HttpServlet {
                 } else {
                     cart = new HashMap<>();
                 }
-                cart.put(dish, count);
-            session.setAttribute("cart", cart);
+                if (count == -1) {
+                    cart.remove(dish);
+                } else {
+                    cart.put(dish, count);
+                }
+                session.setAttribute("cart", cart);
             } else {
                 User user = (User) session.getAttribute("user");
-                Dao.getDao().getCartDao().addDishToCart(user.getId(), dishId, count);
+                if (count == -1) {
+                    Dao.getDao().getCartDao().removeDishFromCart(user.getId(), dishId);
+                } else {
+                    Dao.getDao().getCartDao().addDishToCart(user.getId(), dishId, count);
+                }
+                session.removeAttribute("cart");
             }
             res.sendRedirect(req.getContextPath() + "/cart");
         } catch (DbException e) {

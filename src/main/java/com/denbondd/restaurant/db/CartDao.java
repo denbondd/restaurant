@@ -10,4 +10,6 @@ public interface CartDao {
 
     Map<Dish, Integer> getCart(long userId) throws DbException;
     void makeAnOrder(long userId, Map<Dish, Integer> cart) throws DbException;
+
+    void removeDishFromCart(long userId, long dishId) throws DbException;
 }

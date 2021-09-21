@@ -56,6 +56,21 @@ public class MySqlCartDao implements CartDao {
     }
 
     @Override
+    public void removeDishFromCart(long userId, long dishId) throws DbException {
+        try (Connection c = ConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = c.prepareStatement(SqlUtils.REMOVE_DISH_FROM_CART)) {
+            int k = 0;
+            ps.setLong(++k, userId);
+            ps.setLong(++k, dishId);
+            ps.executeUpdate();
+            c.commit();
+        } catch (SQLException e) {
+            log.error(e);
+            throw new DbException("Cannot removeDishFromCart", e);
+        }
+    }
+
+    @Override
     public void makeAnOrder(long userId, Map<Dish, Integer> cart) throws DbException {
         Connection c = null;
         Savepoint savepoint = null;
