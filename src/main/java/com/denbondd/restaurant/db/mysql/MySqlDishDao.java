@@ -19,7 +19,7 @@ public class MySqlDishDao implements DishDao {
 
     private static final Logger log = LogManager.getLogger(MySqlDishDao.class.getName());
 
-    private static Dish mapDish(ResultSet rs) throws SQLException {
+    public static Dish mapDish(ResultSet rs) throws SQLException {
         return new Dish.Builder()
                 .setId(rs.getLong("id"))
                 .setName(rs.getString("name"))
@@ -28,6 +28,24 @@ public class MySqlDishDao implements DishDao {
                 .setWeight(rs.getLong("weight"))
                 .setDescription(rs.getString("description"))
                 .getDish();
+    }
+
+    @Override
+    public Dish getDishById(long id) throws DbException {
+        try (Connection c = ConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = c.prepareStatement(SqlUtils.GET_DISH_BY_ID)) {
+            ps.setLong(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapDish(rs);
+                } else {
+                    return null;
+                }
+            }
+        } catch (SQLException e) {
+            log.error(e);
+            throw new DbException("Cannot getDishById", e);
+        }
     }
 
     @Override

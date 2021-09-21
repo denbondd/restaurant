@@ -3,6 +3,7 @@ CREATE DATABASE IF NOT EXISTS restaurant;
 USE restaurant;
 
 DROP TABLE IF EXISTS receipt_has_dish;
+DROP TABLE IF EXISTS cart_has_dish;
 DROP TABLE IF EXISTS dish;
 DROP TABLE IF EXISTS receipt;
 DROP TABLE IF EXISTS status;
@@ -51,8 +52,8 @@ CREATE TABLE receipt (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     status_id INT NOT NULL DEFAULT 1,
-    total INT,
-    manager_id INT NOT NULL,
+    total INT NOT NULL,
+    manager_id INT,
     
     FOREIGN KEY (user_id) REFERENCES user(id),
     FOREIGN KEY (manager_id) REFERENCES user(id),
@@ -69,9 +70,21 @@ CREATE TABLE receipt_has_dish (
     FOREIGN KEY (dish_id) REFERENCES dish(id)
 );
 
+CREATE TABLE cart_has_dish (
+	user_id INT NOT NULL,
+    dish_id INT NOT NULL UNIQUE,
+    count INT NOT NULL DEFAULT 1,
+    
+    FOREIGN KEY (user_id) REFERENCES user(id),
+    FOREIGN KEY (dish_id) REFERENCES dish(id)
+);
+
 -- =========INSERTING============= 
 INSERT INTO role (name) VALUE ('client');
 INSERT INTO role (name) VALUE ('manager');
+
+-- login: admin pass: admin role: admin
+INSERT INTO user (login, password, role_id) VALUE ('admin', 'C7AD44CBAD762A5DA0A452F9E854FDC1E0E7A52A38015F23F3EAB1D80B931DD472634DFAC71CD34EBC35D16AB7FB8A90C81F975113D6C7538DC69DD8DE9077EC', 2);
 
 INSERT INTO status (name) VALUE ('new');
 INSERT INTO status (name) VALUE ('approved');

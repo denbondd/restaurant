@@ -2,6 +2,7 @@ package com.denbondd.restaurant.db.mysql;
 
 import com.denbondd.restaurant.db.ConnectionPool;
 import com.denbondd.restaurant.db.UserDao;
+import com.denbondd.restaurant.db.entity.Dish;
 import com.denbondd.restaurant.db.entity.User;
 import com.denbondd.restaurant.exceptions.DbException;
 import com.denbondd.restaurant.util.SqlUtils;
@@ -13,6 +14,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MySqlUserDao implements UserDao {
 
