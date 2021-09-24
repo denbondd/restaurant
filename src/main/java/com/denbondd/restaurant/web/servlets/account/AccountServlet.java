@@ -26,6 +26,11 @@ public class AccountServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
+        if (req.getParameter("signout") != null) {
+            session.invalidate();
+            resp.sendRedirect(req.getContextPath() + "/catalog");
+            return;
+        }
         User user = (User) session.getAttribute("user");
         try {
             List<Receipt> receipts = Dao.getDao().getReceiptDao().getUserReceipts(user.getId());

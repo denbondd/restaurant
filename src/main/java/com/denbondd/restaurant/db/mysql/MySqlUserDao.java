@@ -2,7 +2,6 @@ package com.denbondd.restaurant.db.mysql;
 
 import com.denbondd.restaurant.db.ConnectionPool;
 import com.denbondd.restaurant.db.UserDao;
-import com.denbondd.restaurant.db.entity.Dish;
 import com.denbondd.restaurant.db.entity.User;
 import com.denbondd.restaurant.exceptions.DbException;
 import com.denbondd.restaurant.util.SqlUtils;
@@ -14,8 +13,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MySqlUserDao implements UserDao {
 
@@ -92,6 +89,24 @@ public class MySqlUserDao implements UserDao {
         } finally {
             SqlUtils.close(con);
             SqlUtils.close(ps);
+        }
+    }
+
+    @Override
+    public void changePassword(String login, char[] newPass) throws DbException {
+        String hashPass = Utils.hash(newPass);
+        try (Connection c = ConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = c.prepareStatement(SqlUtils.CHANGE_PASSWORD)) {
+            int k = 0;
+            ps.setString(++k, hashPass);
+            ps.setString(++k, login);
+            if (ps.executeUpdate() == 0) {
+                throw new DbException("Changing password failed, no rows were changed");
+            }
+            c.commit();
+        } catch (SQLException e) {
+            log.error(e);
+            throw new DbException("Cannot changePassword", e);
         }
     }
 }

@@ -54,6 +54,7 @@ CREATE TABLE receipt (
     status_id INT NOT NULL DEFAULT 1,
     total INT NOT NULL,
     manager_id INT,
+    create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     
     FOREIGN KEY (user_id) REFERENCES user(id),
     FOREIGN KEY (manager_id) REFERENCES user(id),

@@ -164,3 +164,22 @@ body {
     width: 150px;
     object-fit: cover;
 }
+
+.a_login {
+    margin: 15px 15px 0;
+    font-size: xxx-large;
+    font-weight: 600;
+}
+
+.a_changepass {
+    margin-left: 15px;
+}
+
+.a_rec_container {
+    margin: 30px auto auto;
+    width: 90%;
+}
+
+.a_rec_title {
+    font-size: xx-large;
+}
