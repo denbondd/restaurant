@@ -24,7 +24,7 @@ CREATE TABLE user (
     role_id INT NOT NULL DEFAULT 1,
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     
-    FOREIGN KEY (role_id) REFERENCES role(id)
+    FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE category(
@@ -40,7 +40,7 @@ CREATE TABLE dish (
     weight INT NOT NULL,
     description VARCHAR(1023),
     
-    FOREIGN KEY (category_id) REFERENCES category(id)
+    FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE status (
@@ -56,9 +56,9 @@ CREATE TABLE receipt (
     manager_id INT,
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     
-    FOREIGN KEY (user_id) REFERENCES user(id),
-    FOREIGN KEY (manager_id) REFERENCES user(id),
-    FOREIGN KEY (status_id) REFERENCES status(id)
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (manager_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (status_id) REFERENCES status(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE receipt_has_dish (
@@ -67,8 +67,8 @@ CREATE TABLE receipt_has_dish (
     count INT NOT NULL DEFAULT 1,
     price INT NOT NULL,
     
-    FOREIGN KEY (receipt_id) REFERENCES receipt(id),
-    FOREIGN KEY (dish_id) REFERENCES dish(id)
+    FOREIGN KEY (receipt_id) REFERENCES receipt(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (dish_id) REFERENCES dish(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE cart_has_dish (
@@ -76,8 +76,8 @@ CREATE TABLE cart_has_dish (
     dish_id INT NOT NULL UNIQUE,
     count INT NOT NULL DEFAULT 1,
     
-    FOREIGN KEY (user_id) REFERENCES user(id),
-    FOREIGN KEY (dish_id) REFERENCES dish(id)
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (dish_id) REFERENCES dish(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- =========INSERTING============= 

@@ -13,6 +13,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MySqlUserDao implements UserDao {
 
@@ -90,19 +92,64 @@ public class MySqlUserDao implements UserDao {
     }
 
     @Override
-    public void changePassword(String login, char[] newPass) throws DbException {
+    public void changePassword(long userId, char[] newPass) throws DbException {
         String hashPass = Utils.hash(newPass);
         try (Connection c = ConnectionPool.getInstance().getConnection();
              PreparedStatement ps = c.prepareStatement(SqlUtils.CHANGE_PASSWORD)) {
             int k = 0;
             ps.setString(++k, hashPass);
-            ps.setString(++k, login);
+            ps.setLong(++k, userId);
             if (ps.executeUpdate() == 0) {
                 throw new DbException("Changing password failed, no rows were changed");
             }
             c.commit();
         } catch (SQLException e) {
             throw new DbException("Cannot changePassword", e);
+        }
+    }
+
+    @Override
+    public List<User> getAllUsers() throws DbException {
+        List<User> users = new ArrayList<>();
+        try (Connection c = ConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = c.prepareStatement(SqlUtils.GET_ALL_USERS);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                users.add(mapUser(rs));
+            }
+            return users;
+        } catch (SQLException e) {
+            throw new DbException("Cannot getAllUsers", e);
+        }
+    }
+
+    @Override
+    public void changeRole(long userId, int roleId) throws DbException {
+        try (Connection c = ConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = c.prepareStatement(SqlUtils.CHANGE_ROLE)) {
+            int k = 0;
+            ps.setLong(++k, roleId);
+            ps.setLong(++k, userId);
+            if (ps.executeUpdate() == 0) {
+                throw new DbException("Changing role failed, no rows were changed");
+            }
+            c.commit();
+        } catch (SQLException e) {
+            throw new DbException("Cannot changeRole", e);
+        }
+    }
+
+    @Override
+    public void deleteUser(long userId) throws DbException {
+        try (Connection c = ConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = c.prepareStatement(SqlUtils.DELETE_USER)) {
+            ps.setLong(1, userId);
+            if (ps.executeUpdate() == 0) {
+                throw new DbException("Deleting user failed, no rows were changed");
+            }
+            c.commit();
+        } catch (SQLException e) {
+            throw new DbException("Cannot deleteUser", e);
         }
     }
 }
