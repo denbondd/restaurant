@@ -28,8 +28,7 @@ public class AccountServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         if (req.getParameter("signout") != null) {
-            session.invalidate();
-            resp.sendRedirect(req.getContextPath() + "/catalog");
+            Utils.logout(req, resp);
             return;
         }
         User user = (User) session.getAttribute("user");

@@ -35,7 +35,7 @@ public class ChangePasswordServlet extends HttpServlet {
                 req.setAttribute("err", "true");
                 res.sendRedirect(req.getContextPath() + "/account/change-password?err=");
             } else {
-                Dao.getDao().getUserDao().changePassword(user.getLogin(), newPass.toCharArray());
+                Dao.getDao().getUserDao().changePassword(user.getId(), newPass.toCharArray());
                 res.sendRedirect(req.getContextPath() + "/account");
             }
         } catch (DbException e) {
