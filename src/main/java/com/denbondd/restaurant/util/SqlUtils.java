@@ -16,6 +16,7 @@ public class SqlUtils {
     public static final String LOG_IN = "SELECT * FROM user WHERE login LIKE ? AND password LIKE ?";
     public static final String SIGN_UP = "INSERT INTO user (login, password) VALUES (?, ?)";
     public static final String FIND_USER_BY_LOGIN = "SELECT * FROM user WHERE login LIKE ?";
+    public static final String CHANGE_PASSWORD = "UPDATE user SET password = ? WHERE login LIKE ?";
 
     public static final String GET_DISH_BY_ID = "SELECT * FROM dish WHERE id = ?";
     public static final String GET_ALL_DISHES = "SELECT * FROM dish";
@@ -34,6 +35,7 @@ public class SqlUtils {
     public static final String REMOVE_DISH_FROM_CART = "DELETE FROM cart_has_dish WHERE user_id = ? AND dish_id = ?";
 
     public static final String GET_USER_RECEIPTS = "SELECT * FROM receipt WHERE user_id = ?";
+    public static final String GET_RECEIPT_DISHES = "SELECT dish.id, dish.name, rhd.price, rhd.count FROM receipt_has_dish AS rhd INNER JOIN dish ON dish.id = rhd.dish_id WHERE receipt_id = ?";
 
     public static final Map<String, String> sortingTypes = new HashMap<>();
 
