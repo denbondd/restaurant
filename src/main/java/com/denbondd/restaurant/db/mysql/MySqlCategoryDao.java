@@ -37,7 +37,6 @@ public class MySqlCategoryDao implements CategoryDao {
             }
             return categories;
         } catch (SQLException e) {
-            log.error(e);
             throw new DbException("Cannot getAllCategories", e);
         }
     }

@@ -30,7 +30,6 @@ public class MySqlCartDao implements CartDao {
             }
             c.commit();
         } catch (SQLException e) {
-            log.error(e);
             throw new DbException("Cannot addDishToCart", e);
         }
     }
@@ -50,7 +49,6 @@ public class MySqlCartDao implements CartDao {
             }
             return cart;
         } catch (SQLException e) {
-            log.error(e);
             throw new DbException("Cannot getCart", e);
         }
     }
@@ -64,8 +62,8 @@ public class MySqlCartDao implements CartDao {
             ps.setLong(++k, dishId);
             ps.executeUpdate();
             c.commit();
+            throw new SQLException("test err");
         } catch (SQLException e) {
-            log.error(e);
             throw new DbException("Cannot removeDishFromCart", e);
         }
     }
@@ -83,7 +81,6 @@ public class MySqlCartDao implements CartDao {
             }
         } catch (SQLException e) {
             if (c != null) SqlUtils.rollback(c, savepoint);
-            log.error(e);
             throw new DbException("Cannot makeAnOrder", e);
         } finally {
             SqlUtils.close(c);

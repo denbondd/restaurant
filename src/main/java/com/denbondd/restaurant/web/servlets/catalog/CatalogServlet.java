@@ -4,6 +4,7 @@ import com.denbondd.restaurant.db.Dao;
 import com.denbondd.restaurant.db.entity.Category;
 import com.denbondd.restaurant.db.entity.Dish;
 import com.denbondd.restaurant.exceptions.DbException;
+import com.denbondd.restaurant.util.Utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -49,8 +50,8 @@ public class CatalogServlet extends HttpServlet {
             session.setAttribute("dishes", dishes);
             req.getRequestDispatcher("/WEB-INF/jsp/catalog.jsp").forward(req, resp);
         } catch (DbException e) {
-            //TODO
-            log.error(e);
+            log.error(Utils.getErrMessage(e));
+            resp.sendError(500);
         }
     }
 }

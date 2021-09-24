@@ -3,6 +3,7 @@ package com.denbondd.restaurant.web.servlets.account;
 import com.denbondd.restaurant.db.Dao;
 import com.denbondd.restaurant.db.entity.User;
 import com.denbondd.restaurant.exceptions.DbException;
+import com.denbondd.restaurant.util.Utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -38,8 +39,8 @@ public class ChangePasswordServlet extends HttpServlet {
                 res.sendRedirect(req.getContextPath() + "/account");
             }
         } catch (DbException e) {
-            log.error(e);
-            //todo
+            log.error(Utils.getErrMessage(e));
+            res.sendError(500);
         }
     }
 }

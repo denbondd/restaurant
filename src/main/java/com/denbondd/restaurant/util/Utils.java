@@ -29,4 +29,8 @@ public class Utils {
             throw new IllegalArgumentException(e);
         }
     }
+
+    public static String getErrMessage(Exception e) {
+        return e + "; Caused by: " + e.getCause().toString();
+    }
 }

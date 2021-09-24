@@ -150,6 +150,10 @@ body {
     height: 100px;
 }
 
+.err_type {
+    font-size: medium;
+}
+
 .dc_container {
     display: flex;
     align-items: center;

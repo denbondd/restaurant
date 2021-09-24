@@ -43,7 +43,6 @@ public class MySqlDishDao implements DishDao {
                 }
             }
         } catch (SQLException e) {
-            log.error(e);
             throw new DbException("Cannot getDishById", e);
         }
     }
@@ -59,7 +58,6 @@ public class MySqlDishDao implements DishDao {
             }
             return dishes;
         } catch (SQLException e) {
-            log.error(e);
             throw new DbException("Cannot getAllDishes", e);
         }
     }
@@ -77,7 +75,6 @@ public class MySqlDishDao implements DishDao {
             }
             return dishes;
         } catch (SQLException e) {
-            log.error(e);
             throw new DbException("Cannot getDishesFromCategory" + categoryId, e);
         }
     }
@@ -96,7 +93,6 @@ public class MySqlDishDao implements DishDao {
             }
             return dishes;
         } catch (SQLException e) {
-            log.error(e);
             throw new DbException("Cannot getSortedDishesFromCategory" + categoryId, e);
         }
     }
@@ -114,7 +110,6 @@ public class MySqlDishDao implements DishDao {
             }
             return dishes;
         } catch (SQLException e) {
-            log.error(e);
             throw new DbException("Cannot getSortedDishes", e);
         }
     }
@@ -129,7 +124,6 @@ public class MySqlDishDao implements DishDao {
             }
             return -1;
         } catch (SQLException e) {
-            log.error(e);
             throw new DbException("Cannot getDishesNumber", e);
         }
     }
@@ -146,7 +140,6 @@ public class MySqlDishDao implements DishDao {
                 return -1;
             }
         } catch (SQLException e) {
-            log.error(e);
             throw new DbException("Cannot getDishesNumberInCategory", e);
         }
     }

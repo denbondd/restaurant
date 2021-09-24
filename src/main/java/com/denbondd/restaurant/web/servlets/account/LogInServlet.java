@@ -42,8 +42,8 @@ public class LogInServlet extends HttpServlet {
                 resp.sendRedirect(req.getContextPath() + "/account");
             }
         } catch (DbException e) {
-            //TODO
-            log.error(e);
+            log.error(Utils.getErrMessage(e));
+            resp.sendError(500);
         }
     }
 }

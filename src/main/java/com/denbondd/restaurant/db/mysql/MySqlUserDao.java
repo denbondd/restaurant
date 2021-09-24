@@ -43,7 +43,6 @@ public class MySqlUserDao implements UserDao {
                 return mapUser(rs);
             }
         } catch (SQLException ex) {
-            log.error(ex);
             throw new DbException("Cannot getUserByLogin", ex);
         }
     }
@@ -61,7 +60,6 @@ public class MySqlUserDao implements UserDao {
                 return mapUser(rs);
             }
         } catch (SQLException ex) {
-            log.error(ex);
             throw new DbException("Cannot logIn", ex);
         }
     }
@@ -83,7 +81,6 @@ public class MySqlUserDao implements UserDao {
             con.commit();
             return getUserByLogin(login);
         } catch (SQLException ex) {
-            log.error(ex);
             if (con != null) SqlUtils.rollback(con);
             throw new DbException("Cannot logIn", ex);
         } finally {
@@ -105,7 +102,6 @@ public class MySqlUserDao implements UserDao {
             }
             c.commit();
         } catch (SQLException e) {
-            log.error(e);
             throw new DbException("Cannot changePassword", e);
         }
     }

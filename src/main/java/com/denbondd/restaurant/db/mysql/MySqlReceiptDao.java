@@ -45,7 +45,6 @@ public class MySqlReceiptDao implements ReceiptDao {
             }
             return receipts;
         } catch (SQLException e) {
-            log.error(e);
             throw new DbException("Cannot getUserReceipts", e);
         }
     }

@@ -3,6 +3,7 @@ package com.denbondd.restaurant.web.servlets.account;
 import com.denbondd.restaurant.db.Dao;
 import com.denbondd.restaurant.db.entity.User;
 import com.denbondd.restaurant.exceptions.DbException;
+import com.denbondd.restaurant.util.Utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -40,8 +41,8 @@ public class SignUpServlet extends HttpServlet {
             req.getSession().setAttribute("user", user);
             resp.sendRedirect(req.getContextPath() + "/account");
         } catch (DbException e) {
-            //TODO
-            log.error(e);
+            log.error(Utils.getErrMessage(e));
+            resp.sendError(500);
         }
     }
 }
