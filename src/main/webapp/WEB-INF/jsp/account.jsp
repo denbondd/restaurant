@@ -13,37 +13,39 @@
 <a href="${pageContext.request.contextPath}/account/change-password" class="a_changepass">Change password</a>
 <a href="${pageContext.request.contextPath}/account?signout=" class="a_changepass">Sign out</a>
 
-<div class="a_rec_container">
-    <p class="a_rec_title">Your receipts:</p>
+<c:if test="${user.roleId != 2}">
+    <div class="a_rec_container">
+        <p class="a_rec_title">Your receipts:</p>
 
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Status</th>
-            <th scope="col">Date of order</th>
-            <th scope="col">Total</th>
-            <th scope="col">Products</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach var="receipt" items="${receipts}">
+        <table class="table table-striped">
+            <thead>
             <tr>
-                <th scope="col">${receipt.id}</th>
-                <th scope="col">${receipt.status.value}</th>
-                <th scope="col">${receipt.createDate}</th>
-                <th scope="col">${receipt.total}</th>
-                <th scope="col">
-                    <c:forEach var="dish" items="${receipt.dishes}">
-                        ${dish.name}: ${dish.price}&#8372; * ${dish.count}<br>
-                    </c:forEach>
-                </th>
+                <th>#</th>
+                <th>Status</th>
+                <th>Date of order</th>
+                <th>Products</th>
+                <th>Total</th>
             </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            <c:forEach var="receipt" items="${receipts}">
+                <tr>
+                    <th>${receipt.id}</th>
+                    <th>${receipt.status.value}</th>
+                    <th>${receipt.createDate}</th>
+                    <th>
+                        <c:forEach var="dish" items="${receipt.dishes}">
+                            ${dish.name}: ${dish.price}&#8372; * ${dish.count}<br>
+                        </c:forEach>
+                    </th>
+                    <th>${receipt.total}&#8372;</th>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
 
-</div>
+    </div>
+</c:if>
 
 </body>
 </html>

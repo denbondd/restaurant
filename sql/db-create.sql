@@ -24,7 +24,7 @@ CREATE TABLE user (
     role_id INT NOT NULL DEFAULT 1,
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     
-    FOREIGN KEY (role_id) REFERENCES role(id)
+    FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE category(
@@ -40,7 +40,7 @@ CREATE TABLE dish (
     weight INT NOT NULL,
     description VARCHAR(1023),
     
-    FOREIGN KEY (category_id) REFERENCES category(id)
+    FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE status (
@@ -52,23 +52,24 @@ CREATE TABLE receipt (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     status_id INT NOT NULL DEFAULT 1,
-    total INT NOT NULL,
+    total INT,
     manager_id INT,
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     
-    FOREIGN KEY (user_id) REFERENCES user(id),
-    FOREIGN KEY (manager_id) REFERENCES user(id),
-    FOREIGN KEY (status_id) REFERENCES status(id)
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (manager_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (status_id) REFERENCES status(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE receipt_has_dish (
 	receipt_id INT NOT NULL,
 	dish_id INT NOT NULL,
     count INT NOT NULL DEFAULT 1,
-    price INT NOT NULL,
+    price INT,
     
-    FOREIGN KEY (receipt_id) REFERENCES receipt(id),
-    FOREIGN KEY (dish_id) REFERENCES dish(id)
+    UNIQUE KEY (receipt_id, dish_id),
+    FOREIGN KEY (receipt_id) REFERENCES receipt(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (dish_id) REFERENCES dish(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE cart_has_dish (
@@ -76,11 +77,24 @@ CREATE TABLE cart_has_dish (
     dish_id INT NOT NULL UNIQUE,
     count INT NOT NULL DEFAULT 1,
     
-    FOREIGN KEY (user_id) REFERENCES user(id),
-    FOREIGN KEY (dish_id) REFERENCES dish(id)
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (dish_id) REFERENCES dish(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- =========INSERTING============= 
+-- ==========TRIGGERS==============
+DROP TRIGGER IF EXISTS receipt_has_dish_set_price;
+
+DELIMITER //
+CREATE DEFINER = CURRENT_USER TRIGGER restaurant.receipt_has_dish_set_price BEFORE INSERT ON receipt_has_dish FOR EACH ROW
+BEGIN
+    SET NEW.price = (SELECT price FROM dish WHERE dish.id = NEW.dish_id);
+    UPDATE receipt
+    SET total = NEW.price * NEW.count + ifnull(total, 0) 
+	WHERE id = NEW.receipt_id;
+END//
+DELIMITER ;
+
+-- ==========INSERTING============= 
 INSERT INTO role (name) VALUE ('client');
 INSERT INTO role (name) VALUE ('manager');
 
