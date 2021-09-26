@@ -1,8 +1,9 @@
 package com.denbondd.restaurant.db.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Dish {
+public class Dish implements Serializable {
 
     private long id;
     private String name;

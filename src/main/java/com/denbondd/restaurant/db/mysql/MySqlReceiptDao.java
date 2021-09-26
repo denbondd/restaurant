@@ -68,4 +68,74 @@ public class MySqlReceiptDao implements ReceiptDao {
         }
         return dishes;
     }
+
+    @Override
+    public List<Receipt> getAllReceipts() throws DbException {
+        List<Receipt> receipts = new ArrayList<>();
+        try (Connection c = ConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = c.prepareStatement(SqlUtils.GET_ALL_RECEIPTS);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Receipt receipt = mapReceipt(rs);
+                receipt.setDishes(getReceiptDishes(receipt.getId()));
+                receipts.add(receipt);
+            }
+            return receipts;
+        } catch (SQLException e) {
+            throw new DbException("Cannot getAllReceipts", e);
+        }
+    }
+
+    @Override
+    public List<Receipt> getAllReceiptsAcceptedBy(long managerId) throws DbException {
+        List<Receipt> receipts = new ArrayList<>();
+        try (Connection c = ConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = c.prepareStatement(SqlUtils.GET_RECEIPTS_APPROVED_BY)) {
+            ps.setLong(1, managerId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Receipt receipt = mapReceipt(rs);
+                    receipt.setDishes(getReceiptDishes(receipt.getId()));
+                    receipts.add(receipt);
+                }
+            }
+            return receipts;
+        } catch (SQLException e) {
+            throw new DbException("Cannot getAllReceiptsAcceptedBy", e);
+        }
+    }
+
+    @Override
+    public List<Receipt> getNotApproved() throws DbException {
+        List<Receipt> receipts = new ArrayList<>();
+        try (Connection c = ConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = c.prepareStatement(SqlUtils.GET_NOT_APPROVED);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Receipt receipt = mapReceipt(rs);
+                receipt.setDishes(getReceiptDishes(receipt.getId()));
+                receipts.add(receipt);
+            }
+            return receipts;
+        } catch (SQLException e) {
+            throw new DbException("Cannot getNotApproved", e);
+        }
+    }
+
+    @Override
+    public void changeStatus(long receiptId, long statusId, long managerId) throws DbException {
+        try (Connection c = ConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = c.prepareStatement(SqlUtils.CHANGE_RECEIPT_STATUS)) {
+            int k = 0;
+            ps.setLong(++k, statusId);
+            ps.setLong(++k, managerId);
+            ps.setLong(++k, receiptId);
+            if (ps.executeUpdate() == 0) {
+                throw new SQLException("Change status failed, no rows attached");
+            }
+            c.commit();
+        } catch (SQLException e) {
+            throw new DbException("Cannot changeStatus", e);
+        }
+    }
 }

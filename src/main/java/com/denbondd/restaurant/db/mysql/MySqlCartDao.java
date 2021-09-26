@@ -62,7 +62,6 @@ public class MySqlCartDao implements CartDao {
             ps.setLong(++k, dishId);
             ps.executeUpdate();
             c.commit();
-            throw new SQLException("test err");
         } catch (SQLException e) {
             throw new DbException("Cannot removeDishFromCart", e);
         }
@@ -75,7 +74,7 @@ public class MySqlCartDao implements CartDao {
         try {
             c = ConnectionPool.getInstance().getConnection();
             savepoint = c.setSavepoint();
-            long receiptId = addReceipt(c, userId, cart);
+            long receiptId = addReceipt(c, userId);
             for (Map.Entry<Dish, Integer> entry : cart.entrySet()) {
                 addReceiptHasDish(c, receiptId, entry.getKey(), entry.getValue());
             }
@@ -101,15 +100,10 @@ public class MySqlCartDao implements CartDao {
         }
     }
 
-    private long addReceipt(Connection c, long userId, Map<Dish, Integer> cart) throws SQLException {
-        int total = 0;
-        for (Map.Entry<Dish, Integer> entry : cart.entrySet()) {
-            total += entry.getKey().getPrice() * entry.getValue();
-        }
+    private long addReceipt(Connection c, long userId) throws SQLException {
         try (PreparedStatement ps = c.prepareStatement(SqlUtils.ADD_RECEIPT, Statement.RETURN_GENERATED_KEYS)) {
             int k = 0;
             ps.setLong(++k, userId);
-            ps.setInt(++k, total);
             if (ps.executeUpdate() == 0) {
                 throw new SQLException("Adding receipt failed, no rows were attached");
             }

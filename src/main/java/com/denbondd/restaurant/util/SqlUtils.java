@@ -33,12 +33,16 @@ public class SqlUtils {
     public static final String ADD_DISH_TO_CART = "INSERT INTO cart_has_dish (user_id, dish_id, count) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE count = ?";
     public static final String GET_CART = "SELECT dish_id AS id, name, category_id, price, weight, description, count FROM cart_has_dish AS chd INNER JOIN dish ON dish.id = chd.dish_id WHERE chd.user_id = ?";
 
-    public static final String ADD_RECEIPT = "INSERT INTO receipt (user_id, total) VALUES (?, ?)";
+    public static final String ADD_RECEIPT = "INSERT INTO receipt (user_id) VALUES (?)";
     public static final String ADD_RECEIPT_HAS_DISH = "INSERT INTO receipt_has_dish (receipt_id, dish_id, count, price) VALUES (?, ?, ?, ?)";
     public static final String REMOVE_DISH_FROM_CART = "DELETE FROM cart_has_dish WHERE user_id = ? AND dish_id = ?";
 
     public static final String GET_USER_RECEIPTS = "SELECT * FROM receipt WHERE user_id = ?";
     public static final String GET_RECEIPT_DISHES = "SELECT dish.id, dish.name, rhd.price, rhd.count FROM receipt_has_dish AS rhd INNER JOIN dish ON dish.id = rhd.dish_id WHERE receipt_id = ?";
+    public static final String GET_ALL_RECEIPTS = "SELECT * FROM receipt";
+    public static final String GET_RECEIPTS_APPROVED_BY = "SELECT * FROM receipt WHERE manager_id = ?";
+    public static final String GET_NOT_APPROVED = "SELECT * FROM receipt WHERE manager_id IS NULL";
+    public static final String CHANGE_RECEIPT_STATUS = "UPDATE receipt SET status_id = ?, manager_id = ? WHERE id = ?";
 
 
     public static final Map<String, String> sortingTypes = new HashMap<>();

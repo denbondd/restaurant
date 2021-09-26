@@ -52,7 +52,7 @@ CREATE TABLE receipt (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     status_id INT NOT NULL DEFAULT 1,
-    total INT NOT NULL,
+    total INT,
     manager_id INT,
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     
@@ -65,8 +65,9 @@ CREATE TABLE receipt_has_dish (
 	receipt_id INT NOT NULL,
 	dish_id INT NOT NULL,
     count INT NOT NULL DEFAULT 1,
-    price INT NOT NULL,
+    price INT,
     
+    UNIQUE KEY (receipt_id, dish_id),
     FOREIGN KEY (receipt_id) REFERENCES receipt(id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (dish_id) REFERENCES dish(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -80,7 +81,20 @@ CREATE TABLE cart_has_dish (
     FOREIGN KEY (dish_id) REFERENCES dish(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- =========INSERTING============= 
+-- ==========TRIGGERS==============
+DROP TRIGGER IF EXISTS receipt_has_dish_set_price;
+
+DELIMITER //
+CREATE DEFINER = CURRENT_USER TRIGGER restaurant.receipt_has_dish_set_price BEFORE INSERT ON receipt_has_dish FOR EACH ROW
+BEGIN
+    SET NEW.price = (SELECT price FROM dish WHERE dish.id = NEW.dish_id);
+    UPDATE receipt
+    SET total = NEW.price * NEW.count + ifnull(total, 0) 
+	WHERE id = NEW.receipt_id;
+END//
+DELIMITER ;
+
+-- ==========INSERTING============= 
 INSERT INTO role (name) VALUE ('client');
 INSERT INTO role (name) VALUE ('manager');
 

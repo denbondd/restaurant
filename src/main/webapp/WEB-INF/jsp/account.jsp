@@ -20,25 +20,25 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Status</th>
-                <th scope="col">Date of order</th>
-                <th scope="col">Total</th>
-                <th scope="col">Products</th>
+                <th>#</th>
+                <th>Status</th>
+                <th>Date of order</th>
+                <th>Products</th>
+                <th>Total</th>
             </tr>
             </thead>
             <tbody>
             <c:forEach var="receipt" items="${receipts}">
                 <tr>
-                    <th scope="col">${receipt.id}</th>
-                    <th scope="col">${receipt.status.value}</th>
-                    <th scope="col">${receipt.createDate}</th>
-                    <th scope="col">${receipt.total}</th>
-                    <th scope="col">
+                    <th>${receipt.id}</th>
+                    <th>${receipt.status.value}</th>
+                    <th>${receipt.createDate}</th>
+                    <th>
                         <c:forEach var="dish" items="${receipt.dishes}">
                             ${dish.name}: ${dish.price}&#8372; * ${dish.count}<br>
                         </c:forEach>
                     </th>
+                    <th>${receipt.total}&#8372;</th>
                 </tr>
             </c:forEach>
             </tbody>

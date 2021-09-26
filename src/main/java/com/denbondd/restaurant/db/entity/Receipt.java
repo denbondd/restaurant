@@ -1,9 +1,10 @@
 package com.denbondd.restaurant.db.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Receipt {
+public class Receipt implements Serializable {
 
     private long id;
     private long userId;
