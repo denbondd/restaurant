@@ -3,6 +3,7 @@ package com.denbondd.restaurant.web.servlets.cart;
 import com.denbondd.restaurant.db.Dao;
 import com.denbondd.restaurant.db.entity.Dish;
 import com.denbondd.restaurant.db.entity.User;
+import com.denbondd.restaurant.exceptions.AppException;
 import com.denbondd.restaurant.exceptions.DbException;
 import com.denbondd.restaurant.util.Utils;
 import org.apache.logging.log4j.LogManager;
@@ -47,7 +48,7 @@ public class CartServlet extends HttpServlet {
                 session.setAttribute("cart", cart);
             } catch (DbException e) {
                 log.error(Utils.getErrMessage(e));
-                res.sendError(500);
+                throw new AppException(e);
             }
         }
         req.getRequestDispatcher("/WEB-INF/jsp/cart.jsp").forward(req, res);
@@ -86,7 +87,7 @@ public class CartServlet extends HttpServlet {
             res.sendRedirect(req.getContextPath() + "/cart");
         } catch (DbException e) {
             log.error(Utils.getErrMessage(e));
-            res.sendError(500);
+            throw new AppException(e);
         }
     }
 }

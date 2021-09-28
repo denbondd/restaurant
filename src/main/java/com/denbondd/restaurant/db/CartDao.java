@@ -12,4 +12,6 @@ public interface CartDao {
     void makeAnOrder(long userId, Map<Dish, Integer> cart) throws DbException;
 
     void removeDishFromCart(long userId, long dishId) throws DbException;
+
+    void cleanCart(long userId) throws DbException;
 }

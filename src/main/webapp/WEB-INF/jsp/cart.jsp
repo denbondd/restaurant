@@ -9,12 +9,17 @@
 <%@include file="header.jspf" %>
 
 <jsp:useBean id="cart" scope="session" type="java.util.Map"/>
-<c:forEach items="${cart}" var="item">
-    <%@ include file="dish_cart.jspf" %>
-</c:forEach>
+<c:if test="${cart.size() == 0}">
+    <p class="cart_empty">Cart is empty</p>
+</c:if>
+<c:if test="${cart.size() != 0}">
+    <c:forEach items="${cart}" var="item">
+        <%@ include file="dish_cart.jspf" %>
+    </c:forEach>
 
-<form action="${pageContext.request.contextPath}/account" method="post">
-    <input type="submit" value="Make an order" />
-</form>
+    <form action="${pageContext.request.contextPath}/account" method="post">
+        <input type="submit" value="Make an order"/>
+    </form>
+</c:if>
 </body>
 </html>

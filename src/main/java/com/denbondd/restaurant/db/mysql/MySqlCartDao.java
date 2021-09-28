@@ -116,4 +116,18 @@ public class MySqlCartDao implements CartDao {
         }
         return -1;
     }
+
+    @Override
+    public void cleanCart(long userId) throws DbException {
+        try (Connection c = ConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = c.prepareStatement(SqlUtils.CLEAN_USER_CART)) {
+            ps.setLong(1, userId);
+            if (ps.executeUpdate() == 0) {
+                throw new SQLException("Cleaning cart failed, no rows were deleted");
+            }
+            c.commit();
+        } catch (SQLException e) {
+            throw new DbException("Cannot cleanCart", e);
+        }
+    }
 }

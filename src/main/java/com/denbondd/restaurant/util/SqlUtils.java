@@ -32,6 +32,7 @@ public class SqlUtils {
 
     public static final String ADD_DISH_TO_CART = "INSERT INTO cart_has_dish (user_id, dish_id, count) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE count = ?";
     public static final String GET_CART = "SELECT dish_id AS id, name, category_id, price, weight, description, count FROM cart_has_dish AS chd INNER JOIN dish ON dish.id = chd.dish_id WHERE chd.user_id = ?";
+    public static final String CLEAN_USER_CART = "DELETE FROM cart_has_dish WHERE user_id = ?";
 
     public static final String ADD_RECEIPT = "INSERT INTO receipt (user_id) VALUES (?)";
     public static final String ADD_RECEIPT_HAS_DISH = "INSERT INTO receipt_has_dish (receipt_id, dish_id, count, price) VALUES (?, ?, ?, ?)";

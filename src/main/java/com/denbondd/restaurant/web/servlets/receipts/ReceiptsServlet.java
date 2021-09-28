@@ -3,6 +3,7 @@ package com.denbondd.restaurant.web.servlets.receipts;
 import com.denbondd.restaurant.db.Dao;
 import com.denbondd.restaurant.db.entity.Receipt;
 import com.denbondd.restaurant.db.entity.User;
+import com.denbondd.restaurant.exceptions.AppException;
 import com.denbondd.restaurant.exceptions.DbException;
 import com.denbondd.restaurant.util.Utils;
 import org.apache.logging.log4j.LogManager;
@@ -43,14 +44,13 @@ public class ReceiptsServlet extends HttpServlet {
                     receipts = Dao.getDao().getReceiptDao().getAllReceiptsAcceptedBy(user.getId());
                     break;
                 default:
-                    resp.sendError(500);
-                    return;
+                    throw new AppException("unknown filter");
             }
             session.setAttribute("receipts", receipts);
             req.getRequestDispatcher("/WEB-INF/jsp/receipts.jsp").forward(req, resp);
         } catch (DbException e) {
             log.error(Utils.getErrMessage(e));
-            resp.sendError(500);
+            throw new AppException(e);
         }
     }
 
@@ -63,7 +63,7 @@ public class ReceiptsServlet extends HttpServlet {
             Dao.getDao().getReceiptDao().changeStatus(receiptId, newStatusId, user.getId());
         } catch (DbException e) {
             log.error(Utils.getErrMessage(e));
-            resp.sendError(500);
+            throw new AppException(e);
         }
         resp.sendRedirect(req.getContextPath() + "/receipts");
     }

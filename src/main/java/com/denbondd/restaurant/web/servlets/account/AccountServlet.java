@@ -4,6 +4,7 @@ import com.denbondd.restaurant.db.Dao;
 import com.denbondd.restaurant.db.entity.Dish;
 import com.denbondd.restaurant.db.entity.Receipt;
 import com.denbondd.restaurant.db.entity.User;
+import com.denbondd.restaurant.exceptions.AppException;
 import com.denbondd.restaurant.exceptions.DbException;
 import com.denbondd.restaurant.util.Utils;
 import org.apache.logging.log4j.LogManager;
@@ -37,7 +38,7 @@ public class AccountServlet extends HttpServlet {
             session.setAttribute("receipts", receipts);
         } catch (DbException e) {
             log.error(Utils.getErrMessage(e));
-            resp.sendError(500);
+            throw new AppException(e);
         }
         req.getRequestDispatcher("/WEB-INF/jsp/account.jsp").forward(req, resp);
     }
@@ -49,9 +50,11 @@ public class AccountServlet extends HttpServlet {
         Map<Dish, Integer> cart = (Map<Dish, Integer>) session.getAttribute("cart");
         try {
             Dao.getDao().getCartDao().makeAnOrder(user.getId(), cart);
+            Dao.getDao().getCartDao().cleanCart(user.getId());
+            session.removeAttribute("cart");
         } catch (DbException e) {
             log.error(Utils.getErrMessage(e));
-            resp.sendError(500);
+            throw new AppException(e);
         }
         resp.sendRedirect(req.getContextPath() + "/account");
     }
