@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * If user is logged, then he/she doesn't have access to signup or login pages
+ */
 @WebFilter({"/account/login", "/account/signup"})
 public class LogInSignUpFilter extends HttpFilter {
 

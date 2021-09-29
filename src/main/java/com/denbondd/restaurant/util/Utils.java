@@ -30,10 +30,17 @@ public class Utils {
         }
     }
 
+    /**
+     * Get formatted error message for logging
+     * @return formatted string with error and it's cause
+     */
     public static String getErrMessage(Exception e) {
         return e + "; Caused by: " + e.getCause().toString();
     }
 
+    /**
+     * invalidate session and redirect to catalog
+     */
     public static void logout(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.getSession().invalidate();
         resp.sendRedirect(req.getContextPath() + "/catalog");

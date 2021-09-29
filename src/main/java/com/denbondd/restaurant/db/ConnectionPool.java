@@ -28,6 +28,10 @@ public class ConnectionPool {
         return instance;
     }
 
+    /**
+     * Get connection from pool
+     * @return connection
+     */
     public Connection getConnection() throws SQLException {
         return ds.getConnection();
     }

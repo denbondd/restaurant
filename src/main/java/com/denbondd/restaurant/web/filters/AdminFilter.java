@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Redirects users on admin pages
+ */
 @WebFilter({"/users", "/receipts"})
 public class AdminFilter extends HttpFilter {
 

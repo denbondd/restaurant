@@ -54,6 +54,10 @@ public class SqlUtils {
         sortingTypes.put("Category", "category_id");
     }
 
+    /**
+     * rollback connection and log error if it appears
+     * @param con Connection to rollback
+     */
     public static void rollback(Connection con) {
         try {
             con.rollback();
@@ -62,6 +66,11 @@ public class SqlUtils {
         }
     }
 
+    /**
+     * rollback connection with savepoint and log error if it appears
+     * @param con Connection to rollback
+     * @param s Savepoint to use
+     */
     public static void rollback(Connection con, Savepoint s) {
         try {
             con.rollback(s);
@@ -70,9 +79,13 @@ public class SqlUtils {
         }
     }
 
-    public static void close(AutoCloseable con) {
+    /**
+     * close AutoCloseable object and log error if it appears
+     * @param closeable object to close
+     */
+    public static void close(AutoCloseable closeable) {
         try {
-            con.close();
+            closeable.close();
         } catch (Exception e) {
             log.error(e);
         }

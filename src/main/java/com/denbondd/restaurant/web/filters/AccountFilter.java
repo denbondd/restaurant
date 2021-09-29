@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Redirects not logged users to login page when accessing to pages that use account
+ */
 @WebFilter({"/account", "/account/change-password"})
 public class AccountFilter extends HttpFilter {
 

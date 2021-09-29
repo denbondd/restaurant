@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * If current user is admin, he/she doesn't have access to user pages
+ */
 @WebFilter({"/cart", "/catalog"})
 public class UserFilter extends HttpFilter {
 

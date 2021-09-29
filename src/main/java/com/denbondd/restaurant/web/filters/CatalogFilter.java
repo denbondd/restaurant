@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Redirect access to / or /catalog to /catalog page with parameters
+ */
 @WebFilter({"/", "/catalog"})
 public class CatalogFilter extends HttpFilter {
 

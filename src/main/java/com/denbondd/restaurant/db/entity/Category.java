@@ -2,6 +2,9 @@ package com.denbondd.restaurant.db.entity;
 
 import java.io.Serializable;
 
+/**
+ * Entity class for category table in database
+ */
 public class Category implements Serializable {
 
     private long id;
