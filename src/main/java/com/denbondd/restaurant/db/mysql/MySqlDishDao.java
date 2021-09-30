@@ -63,23 +63,6 @@ public class MySqlDishDao implements DishDao {
     }
 
     @Override
-    public List<Dish> getDishesFromCategory(int categoryId) throws DbException {
-        List<Dish> dishes = new ArrayList<>();
-        try (Connection c = ConnectionPool.getInstance().getConnection();
-             PreparedStatement ps = c.prepareStatement(SqlUtils.GET_DISHES_FROM_CATEGORY)) {
-            ps.setLong(1, categoryId);
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    dishes.add(mapDish(rs));
-                }
-            }
-            return dishes;
-        } catch (SQLException e) {
-            throw new DbException("Cannot getDishesFromCategory" + categoryId, e);
-        }
-    }
-
-    @Override
     public List<Dish> getSortedDishesFromCategoryOnPage(int categoryId, String sortBy, int dishesInPage, int pageNum) throws DbException {
         List<Dish> dishes = new ArrayList<>();
         try (Connection c = ConnectionPool.getInstance().getConnection();

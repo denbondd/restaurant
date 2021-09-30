@@ -23,7 +23,6 @@ public class SqlUtils {
 
     public static final String GET_DISH_BY_ID = "SELECT * FROM dish WHERE id = ?";
     public static final String GET_ALL_DISHES = "SELECT * FROM dish";
-    public static final String GET_DISHES_FROM_CATEGORY = "SELECT * FROM dish WHERE category_id = ?";
     public static final String GET_SORTED_DISHES_FROM_CATEGORY = "SELECT * FROM dish WHERE category_id = ? ORDER BY ";
     public static final String GET_SORTED_DISHES = "SELECT * FROM dish ORDER BY ";
     public static final String GET_DISHES_COUNT = "SELECT COUNT(*) FROM dish";

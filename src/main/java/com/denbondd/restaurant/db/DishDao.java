@@ -16,13 +16,6 @@ public interface DishDao {
     List<Dish> getAllDishes() throws DbException;
 
     /**
-     * get all dishes from category
-     * @param categoryId id of category
-     * @return list of dishes
-     */
-    List<Dish> getDishesFromCategory(int categoryId) throws DbException;
-
-    /**
      * Get sorted dishes from category using pagination. All from dish table in db
      * @param categoryId id of category
      * @param sortBy name of field in dish table to sort by
