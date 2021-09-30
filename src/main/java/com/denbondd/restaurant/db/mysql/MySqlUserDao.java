@@ -18,8 +18,6 @@ import java.util.List;
 
 public class MySqlUserDao implements UserDao {
 
-    private static final Logger log = LogManager.getLogger(MySqlUserDao.class.getName());
-
     private static User mapUser(ResultSet rs) throws SQLException {
         int k = 0;
         return new User.Builder()

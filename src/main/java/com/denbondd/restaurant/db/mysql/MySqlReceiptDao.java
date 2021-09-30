@@ -17,8 +17,6 @@ import java.util.List;
 
 public class MySqlReceiptDao implements ReceiptDao {
 
-    private static final Logger log = LogManager.getLogger(MySqlReceiptDao.class.getName());
-
     private static Receipt mapReceipt(ResultSet rs) throws SQLException {
         return new Receipt.Builder()
                 .setId(rs.getLong("id"))

@@ -14,8 +14,6 @@ import java.util.Map;
 
 public class MySqlCartDao implements CartDao {
 
-    private static final Logger log = LogManager.getLogger(MySqlCartDao.class.getName());
-
     @Override
     public void addDishToCart(long userId, long dishId, int count) throws DbException {
         try (Connection c = ConnectionPool.getInstance().getConnection();

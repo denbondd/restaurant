@@ -17,8 +17,6 @@ import java.util.List;
 
 public class MySqlCategoryDao implements CategoryDao {
 
-    private static final Logger log = LogManager.getLogger(MySqlCategoryDao.class.getName());
-
     private static Category mapCategory(ResultSet rs) throws SQLException {
         return new Category.Builder()
                 .setId(rs.getLong("id"))

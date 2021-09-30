@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
     <Appenders>
+        <File name="File"
+              fileName="${sys:logFile}">
+            <PatternLayout
+                pattern="%d{[yyyy-MM-dd HH:mm:ss.SSS]} %-5level %logger{36} - %msg%n" />
+        </File>
+
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout
                     disableAnsi="false"
@@ -9,9 +15,13 @@
 
     </Appenders>
     <Loggers>
-        <Root level="all">
-            <AppenderRef ref="Console" level="trace"/>
+        <Root>
+            <AppenderRef ref="File" level="warn"/>
         </Root>
+
+        <Logger name="com.denbondd.restaurant" level="all">
+            <AppenderRef ref="Console"/>
+        </Logger>
 
     </Loggers>
 </Configuration>

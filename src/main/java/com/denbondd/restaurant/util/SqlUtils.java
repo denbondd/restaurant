@@ -1,7 +1,6 @@
 package com.denbondd.restaurant.util;
 
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -10,8 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SqlUtils {
-
-    private static final Logger log = LogManager.getLogger(SqlUtils.class.getName());
 
     public static final String LOG_IN = "SELECT * FROM user WHERE login LIKE ? AND password LIKE ?";
     public static final String SIGN_UP = "INSERT INTO user (login, password) VALUES (?, ?)";
@@ -55,38 +52,41 @@ public class SqlUtils {
 
     /**
      * rollback connection and log error if it appears
+     *
      * @param con Connection to rollback
      */
     public static void rollback(Connection con) {
         try {
             con.rollback();
         } catch (SQLException e) {
-            log.error(e);
+            LogManager.getLogger(SqlUtils.class.getName()).error(e);
         }
     }
 
     /**
      * rollback connection with savepoint and log error if it appears
+     *
      * @param con Connection to rollback
-     * @param s Savepoint to use
+     * @param s   Savepoint to use
      */
     public static void rollback(Connection con, Savepoint s) {
         try {
             con.rollback(s);
         } catch (SQLException e) {
-            log.error(e);
+            LogManager.getLogger(SqlUtils.class.getName()).error(e);
         }
     }
 
     /**
      * close AutoCloseable object and log error if it appears
+     *
      * @param closeable object to close
      */
     public static void close(AutoCloseable closeable) {
         try {
             closeable.close();
         } catch (Exception e) {
-            log.error(e);
+            LogManager.getLogger(SqlUtils.class.getName()).error(e);
         }
     }
 }

@@ -17,8 +17,6 @@ import java.util.List;
 
 public class MySqlDishDao implements DishDao {
 
-    private static final Logger log = LogManager.getLogger(MySqlDishDao.class.getName());
-
     public static Dish mapDish(ResultSet rs) throws SQLException {
         return new Dish.Builder()
                 .setId(rs.getLong("id"))

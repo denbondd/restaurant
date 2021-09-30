@@ -25,6 +25,12 @@ public class CatalogServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        log.trace("trace");
+        log.debug("debug");
+        log.warn("warn");
+        log.error("error");
+        log.fatal("fatal");
+
         int category = Integer.parseInt(req.getParameter("category"));
         int page = Integer.parseInt(req.getParameter("page"));
         int dishesInPage = Integer.parseInt(req.getParameter("dishesOnPage"));
