@@ -41,6 +41,7 @@ public class SqlUtils {
     public static final String GET_NOT_APPROVED = "SELECT * FROM receipt WHERE manager_id IS NULL";
     public static final String CHANGE_RECEIPT_STATUS = "UPDATE receipt SET status_id = ?, manager_id = ? WHERE id = ?";
 
+    public static final String GET_DISH_ORDERS_COUNT = "SELECT id, name, IFNULL((SELECT SUM(count) FROM receipt_has_dish WHERE receipt_has_dish.dish_id = dish.id), 0) AS orders FROM dish ORDER BY id";
 
     public static final Map<String, String> sortingTypes = new HashMap<>();
 

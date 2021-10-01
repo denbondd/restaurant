@@ -2,8 +2,10 @@ package com.denbondd.restaurant.db;
 
 import com.denbondd.restaurant.db.entity.Dish;
 import com.denbondd.restaurant.exceptions.DbException;
+import javafx.util.Pair;
 
 import java.util.List;
+import java.util.Map;
 
 public interface DishDao {
 
@@ -46,4 +48,10 @@ public interface DishDao {
      * @return number of dishes
      */
     int getDishesNumberInCategory(int categoryId) throws DbException;
+
+    /**
+     * How many times were dish orders.
+     * @return answer in view Map(dish_id, Pair(dish_name, order_count))
+     */
+    Map<Integer, Pair<String, Integer>> getDishesOrderCount() throws DbException;
 }

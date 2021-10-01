@@ -44,6 +44,7 @@ public class ReceiptsServlet extends HttpServlet {
                     receipts = Dao.getDao().getReceiptDao().getAllReceiptsAcceptedBy(user.getId());
                     break;
                 default:
+                    log.error("unknown filter = " + filter);
                     throw new AppException("unknown filter");
             }
             session.setAttribute("receipts", receipts);

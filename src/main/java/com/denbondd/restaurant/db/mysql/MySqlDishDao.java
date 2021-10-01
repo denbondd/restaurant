@@ -5,15 +5,16 @@ import com.denbondd.restaurant.db.DishDao;
 import com.denbondd.restaurant.db.entity.Dish;
 import com.denbondd.restaurant.exceptions.DbException;
 import com.denbondd.restaurant.util.SqlUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import javafx.util.Pair;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MySqlDishDao implements DishDao {
 
@@ -122,6 +123,25 @@ public class MySqlDishDao implements DishDao {
             }
         } catch (SQLException e) {
             throw new DbException("Cannot getDishesNumberInCategory", e);
+        }
+    }
+
+    @Override
+    public Map<Integer, Pair<String, Integer>> getDishesOrderCount() throws DbException {
+        Map<Integer, Pair<String, Integer>> answ = new HashMap<>();
+        try (Connection c = ConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = c.prepareStatement(SqlUtils.GET_DISH_ORDERS_COUNT);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                int orders = rs.getInt("orders");
+                Pair<String, Integer> pair = new Pair<>(name, orders);
+                answ.put(id, pair);
+            }
+            return answ;
+        } catch (SQLException e) {
+            throw new DbException("Cannot getDishesOrderCount", e);
         }
     }
 }
