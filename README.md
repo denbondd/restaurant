@@ -6,6 +6,9 @@
 - **Client** can view catalog of dishes with paginating, sorting and filtering, add them to cart, change their count or delete them from cart.
 Can make an order and observe status of order.
 - **Manager** can view all orders with filtering, change their status. Can delete a user or change his role (manager/client).
+## Database schema
+<p align="center"><img src="https://i.imgur.com/eMN5L6K.png" width="800"></p>
+
 ## Used technologies
 - Java EE
   - Servlets
